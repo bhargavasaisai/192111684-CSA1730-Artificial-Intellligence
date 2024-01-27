@@ -1,0 +1,19 @@
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(start)
+    print(start, end=" ")
+    for next_node in graph.get(start, []):
+        if next_node not in visited:
+            dfs(graph, next_node, visited)
+
+# Get user input for graph
+graph = {}
+vertices = int(input("Enter the number of vertices in the graph: "))
+for _ in range(vertices):
+    vertex = input("Enter vertex: ")
+    edges = input("Enter the neighboring vertices separated by space: ").split()
+    graph[vertex] = edges
+
+start_node = input("Enter the starting node for DFS: ")
+dfs(graph, start_node)
