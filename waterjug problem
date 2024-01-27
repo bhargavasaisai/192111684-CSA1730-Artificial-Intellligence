@@ -1,0 +1,30 @@
+def water_jug(start, capacity1, capacity2, target):
+    jug1, jug2 = start[0], start[1]
+    steps = [(jug1, jug2)]  # To store the steps
+    while jug1 != target and jug2 != target:
+        amount = min(jug1, capacity2 - jug2)
+        jug1 -= amount
+        jug2 += amount
+        steps.append((jug1, jug2))  # Append the step to the list
+        if jug1 == target or jug2 == target:
+            break
+        if jug2 == capacity2:
+            jug2 = 0
+            steps.append((jug1, jug2))
+        else:
+            jug1 = capacity1
+            steps.append((jug1, jug2))
+    return steps  # Returning the list of steps
+
+# Get input from user
+capacity1 = int(input("Enter the capacity of jug 1: "))
+capacity2 = int(input("Enter the capacity of jug 2: "))
+start_jug1 = int(input("Enter the initial amount of water in jug 1: "))
+start_jug2 = int(input("Enter the initial amount of water in jug 2: "))
+target = int(input("Enter the target amount of water: "))
+
+start = (start_jug1, start_jug2)
+steps = water_jug(start, capacity1, capacity2, target)
+print("Steps to reach the final state:")
+for step in steps:
+    print(step)
