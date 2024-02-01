@@ -1,0 +1,21 @@
+% Database predicates for storing names and dates of birth
+:- dynamic person/2.
+
+% Add a person to the database
+add_person(Name, DOB) :-
+    assertz(person(Name, DOB)).
+
+% Retrieve the date of birth for a given person
+get_dob(Name, DOB) :-
+    person(Name, DOB).
+
+% Example usage:
+
+% Add some people to the database
+add_person(john, '1990-05-15').
+add_person(mary, '1985-12-20').
+add_person(alice, '2000-02-10').
+
+% Retrieve the date of birth for a person
+get_dob(john, DOB),
+write('John\'s date of birth: '), write(DOB), nl.
