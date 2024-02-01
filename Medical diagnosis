@@ -1,0 +1,24 @@
+symptom(john, fever).
+symptom(john, cough).
+symptom(mary, headache).
+symptom(mary, fever).
+symptom(jane, cough).
+symptom(jane, fatigue).
+
+diagnosis(Person, Disease) :-
+    symptom(Person, fever),
+    symptom(Person, cough),
+    Disease = 'Flu'.
+
+diagnosis(Person, Disease) :-
+    symptom(Person, headache),
+    symptom(Person, fatigue),
+    Disease = 'Migraine'.
+
+query_diagnosis(Person) :-
+    diagnosis(Person, Disease),
+    write('Diagnosis for '), write(Person), write(': '), write(Disease), nl.
+
+query_diagnosis(Person) :-
+    \+ diagnosis(Person, _),
+    write('No specific diagnosis for '), write(Person), nl.
