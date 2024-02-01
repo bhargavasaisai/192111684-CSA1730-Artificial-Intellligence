@@ -1,0 +1,20 @@
+% Database predicates for planets
+:- dynamic planet/3.
+
+% Facts about planets
+planet(mercury, 57.9, 88).
+planet(venus, 108.2, 225).
+planet(earth, 149.6, 365).
+planet(mars, 227.9, 687).
+planet(jupiter, 778.3, 4333).
+planet(saturn, 1427.0, 10759).
+planet(uranus, 2871.0, 30687).
+planet(neptune, 4497.1, 60190).
+
+% Query to find planets within a certain distance range
+planets_within_distance(MinDistance, MaxDistance) :-
+    planet(Name, Distance, _),
+    Distance >= MinDistance,
+    Distance =< MaxDistance,
+    write(Name), write(' is at a distance of '), write(Distance), write(' million km from the Sun.'), nl,
+    fail.  % To get all solutions
