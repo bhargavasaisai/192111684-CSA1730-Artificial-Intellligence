@@ -1,0 +1,47 @@
+from itertools import permutations
+
+def calculate_total_distance(path, graph):
+    total_distance = 0
+    for i in range(len(path) - 1):
+        total_distance += graph[path[i]][path[i + 1]]
+    return total_distance
+
+def traveling_salesman_problem(graph):
+    num_nodes = len(graph)
+    nodes = list(range(num_nodes))
+
+    min_distance = float('inf')
+    min_path = []
+
+    for path in permutations(nodes):
+        distance = calculate_total_distance(path, graph)
+        if distance < min_distance:
+            min_distance = distance
+            min_path = path
+
+    return min_path, min_distance
+
+def get_user_input():
+    try:
+        num_nodes = int(input("Enter the number of nodes: "))
+        graph = []
+
+        for i in range(num_nodes):
+            row = list(map(int, input(f"Enter distances from node {i+1} to all other nodes (space-separated): ").split()))
+            graph.append(row)
+
+        return graph
+    except ValueError:
+        print("Invalid input. Please enter integer values.")
+
+if __name__ == "__main__":
+    graph = get_user_input()
+    
+    min_path, min_distance = traveling_salesman_problem(graph)
+
+    print("\nGraph:")
+    for row in graph:
+        print(row)
+
+    print("\nOptimal Path:", min_path)
+    print("Optimal Distance:", min_distance)
