@@ -1,0 +1,8 @@
+suggest_diet(healthy, 'Include fruits and vegetables in your diet.').
+suggest_diet(diabetes, 'Limit your intake of carbohydrates and sugars.').
+suggest_diet(hypertension, 'Reduce your salt intake.').
+suggest_diet(_, 'Consult a nutritionist for personalized diet advice.').
+
+query_diet(Disease) :-
+    suggest_diet(Disease, Diet),
+    write('For '), write(Disease), write(': '), write(Diet), nl.
