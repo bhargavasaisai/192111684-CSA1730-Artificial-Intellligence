@@ -1,0 +1,35 @@
+S% Database predicates for students, teachers, subjects, and course codes:- dynamic student/2, teacher/2, subject/2, teaches/2, enrolled_in/2.
+
+% Facts about students
+student(john, 'CS101').
+student(mary, 'CS102').
+student(bob, 'CS101').
+
+% Facts about teachers
+teacher(prof_smith, 'CS101').
+teacher(prof_jones, 'CS102').
+
+% Facts about subjects
+subject('CS101', 'Computer Science I').
+subject('CS102', 'Computer Science II').
+
+% Teaching assignments
+teaches(prof_smith, 'CS101').
+teaches(prof_jones, 'CS102').
+
+% Enrollment information
+enrolled_in(john, 'CS101').
+enrolled_in(mary, 'CS102').
+enrolled_in(bob, 'CS101').
+
+% Query to find students enrolled in a specific subject
+students_in_subject(Subject) :-
+    enrolled_in(Student, Subject),
+    write(Student), write(' is enrolled in '), write(Subject), nl,
+    fail.  % To get all solutions
+
+% Query to find teachers teaching a specific subject
+teachers_for_subject(Subject) :-
+    teaches(Teacher, Subject),
+    write(Teacher), write(' is teaching '), write(Subject), nl,
+    fail.  % To get all solutions
