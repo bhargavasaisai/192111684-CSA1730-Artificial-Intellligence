@@ -1,0 +1,46 @@
+from constraint import Problem
+
+def get_map_coloring_input():
+    try:
+        num_regions = int(input("Enter the number of regions: "))
+        colors = input("Enter the available colors (comma-separated): ").split(',')
+
+        constraints = []
+        for _ in range(num_regions):
+            region_name = input("Enter the name of the region: ")
+            neighbors = input(f"Enter neighbors for {region_name} (comma-separated, or 'none' if no neighbors): ").split(',')
+
+            if neighbors[0].lower() == 'none':
+                neighbors = []
+
+            constraints.append((region_name, neighbors))
+
+        return num_regions, colors, constraints
+    except ValueError:
+        print("Invalid input. Please enter integer values.")
+
+def map_coloring_csp(num_regions, colors, constraints):
+    problem = Problem()
+
+    for region in range(num_regions):
+        problem.addVariable(f"Region_{region + 1}", colors)
+
+    for constraint in constraints:
+        region, neighbors = constraint
+        for neighbor in neighbors:
+            problem.addConstraint(lambda x, y: x != y, (f"Region_{region}", f"Region_{neighbor}"))
+
+    solutions = problem.getSolutions()
+    return solutions
+
+if __name__ == "__main__":
+    num_regions, colors, constraints = get_map_coloring_input()
+    
+    solutions = map_coloring_csp(num_regions, colors, constraints)
+
+    if solutions:
+        print("Possible colorings:")
+        for solution in solutions:
+            print(solution)
+    else:
+        print("No solution found.")
