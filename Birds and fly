@@ -1,0 +1,15 @@
+can_fly(eagle).
+can_fly(sparrow).
+can_fly(penguin).
+
+query_flight(Bird) :-
+    can_fly(Bird),
+    write(Bird),
+    write(' can fly.'),
+    nl.
+
+query_flight(Bird) :-
+    \+ can_fly(Bird),
+    write(Bird),
+    write(' cannot fly.'),
+    nl.
