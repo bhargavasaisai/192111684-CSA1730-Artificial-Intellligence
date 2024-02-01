@@ -1,0 +1,12 @@
+color(red, apple).
+color(yellow, banana).
+color(orange, orange).
+
+query_fruit_color(Color, Fruit) :-
+    color(Color, Fruit),
+    write(Fruit),
+    write(' is '), write(Color), nl.
+
+query_fruit_color(Color, _) :-
+    \+ color(Color, _),
+    write('No fruit found with color '), write(Color), nl.
