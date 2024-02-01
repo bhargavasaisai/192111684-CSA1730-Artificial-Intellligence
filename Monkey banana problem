@@ -1,0 +1,22 @@
+on(floor, monkey).
+on(floor, box).
+on(floor, banana).
+
+above(monkey, box).
+above(box, banana).
+
+move(State, grasp, State1) :-
+    State = [on(floor, monkey), on(floor, box), on(floor, banana)],
+    State1 = [on(box, monkey), on(floor, box), on(floor, banana)].
+
+move(State, climb, State1) :-
+    State = [on(floor, monkey), on(floor, box), on(floor, banana)],
+    State1 = [on(box, monkey), on(floor, box), on(floor, banana)].
+
+move(State, push, State1) :-
+    State = [on(floor, monkey), on(floor, box), on(floor, banana)],
+    State1 = [on(floor, monkey), on(box, box), on(floor, banana)].
+
+move(State, grasp, State1) :-
+    State = [on(box, monkey), on(box, box), on(floor, banana)],
+    State1 = [on(box, monkey), on(box, box), on(monkey, banana)].
