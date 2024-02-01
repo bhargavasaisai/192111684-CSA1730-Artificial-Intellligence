@@ -1,0 +1,43 @@
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+def get_user_input():
+    # Get input for dataset features
+    features_input = input("Enter the dataset features (comma-separated): ")
+    features = [float(x.strip()) for x in features_input.split(',')]
+
+    # Get input for dataset labels
+    labels_input = input("Enter the dataset labels (comma-separated): ")
+    labels = [int(x.strip()) for x in labels_input.split(',')]
+
+    return features, labels
+
+def main():
+    # Get user input for dataset
+    features, labels = get_user_input()
+
+    # Split the dataset into training and testing sets
+    features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.2, random_state=42)
+
+    # Create a Decision Tree model
+    model = DecisionTreeClassifier()
+
+    # Train the model
+    model.fit(features_train, labels_train)
+
+    # Make predictions on the test set
+    predictions = model.predict(features_test)
+
+    # Display accuracy
+    accuracy = accuracy_score(labels_test, predictions)
+    print(f"Accuracy: {accuracy * 100:.2f}%")
+
+    # Get user input for a sample input to make a prediction
+    sample_input = get_user_input()[0]  # Get only the features for a single sample
+    sample_prediction = model.predict([sample_input])
+
+    print(f"Sample prediction for input {sample_input}: {sample_prediction}")
+
+if __name__ == "__main__":
+    main()
