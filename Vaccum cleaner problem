@@ -1,0 +1,19 @@
+def vacuum_cleaner():
+    rooms = int(input("Enter the number of rooms: "))
+    state = [0] * rooms
+
+    for room in range(rooms):
+        state[room] = int(input(f"Enter the dirt level of room {room + 1} (0 or 1): "))
+
+    print("\nInitial State:", state)
+
+    for room in range(rooms):
+        if state[room] == 1:
+            print(f"Room {room + 1} is dirty. Cleaning...")
+            state[room] = 0
+            print("Updated State:", state)
+    
+    print("\nAll rooms are now clean.")
+
+if __name__ == "__main__":
+    vacuum_cleaner()
