@@ -1,0 +1,14 @@
+best_first_search(Start, Goal, Path) :-
+    best_first_search_helper([node(Start, [], 0, heuristic(Start, Goal))], Goal, [], Path).
+
+best_first_search_helper([node(State, Action, Cost, _)|_], Goal, Visited, Path) :-
+    State = Goal,
+    reverse([State|Visited], Path).
+
+best_first_search_helper([node(State, Action, Cost, _)|Rest], Goal, Visited, Path) :-
+    \+ member(State, Visited),
+    findall(node(NextState, [Action|Action], NextCost, heuristic(NextState, Goal)),
+            move(State, NextState, NextCost),
+            Children),
+    append(Children, Rest, NewQueue),
+    best_first_search_helper(NewQueue, Goal, [State|Visited], Path).
