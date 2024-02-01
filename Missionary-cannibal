@@ -1,0 +1,86 @@
+def is_valid_state(state):
+    missionaries_left, cannibals_left, boat_left, missionaries_right, cannibals_right, boat_right = state
+    return (
+        0 <= missionaries_left <= 3 and
+        0 <= cannibals_left <= 3 and
+        0 <= missionaries_right <= 3 and
+        0 <= cannibals_right <= 3 and
+        (missionaries_left >= cannibals_left or missionaries_left == 0) and
+        (missionaries_right >= cannibals_right or missionaries_right == 0)
+    )
+
+def is_goal_state(state):
+    return state == (0, 0, 0, 3, 3, 1) or state == (0, 0, 0, 3, 3, 0)
+
+def get_next_states(current_state):
+    possible_moves = [(1, 0), (2, 0), (0, 1), (0, 2), (1, 1)]
+    next_states = []
+
+    for move in possible_moves:
+        next_state = list(current_state)
+        next_state[0] -= move[0]
+        next_state[1] -= move[1]
+        next_state[2] = 1 - next_state[2]
+        next_state[3] += move[0]
+        next_state[4] += move[1]
+        next_state[5] = 1 - next_state[5]
+
+        if is_valid_state(next_state):
+            next_states.append(tuple(next_state))
+
+    return next_states
+
+def get_user_input():
+    try:
+        missionaries_left = int(input("Enter the number of missionaries on the left side: "))
+        cannibals_left = int(input("Enter the number of cannibals on the left side: "))
+        boat_left = int(input("Enter the number of boats on the left side (0 or 1): "))
+        missionaries_right = int(input("Enter the number of missionaries on the right side: "))
+        cannibals_right = int(input("Enter the number of cannibals on the right side: "))
+        boat_right = int(input("Enter the number of boats on the right side (0 or 1): "))
+
+        if (
+            0 <= missionaries_left <= 3 and
+            0 <= cannibals_left <= 3 and
+            0 <= missionaries_right <= 3 and
+            0 <= cannibals_right <= 3 and
+            0 <= boat_left <= 1 and
+            0 <= boat_right <= 1 and
+            (missionaries_left >= cannibals_left or missionaries_left == 0) and
+            (missionaries_right >= cannibals_right or missionaries_right == 0)
+        ):
+            return missionaries_left, cannibals_left, boat_left, missionaries_right, cannibals_right, boat_right
+        else:
+            print("Invalid input. Please make sure the input values are within the valid range.")
+            return get_user_input()
+
+    except ValueError:
+        print("Invalid input. Please enter integer values.")
+        return get_user_input()
+
+def solve_missionaries_cannibals(initial_state):
+    visited = set()
+    stack = [initial_state]
+
+    while stack:
+        current_state = stack.pop()
+        if current_state in visited:
+            continue
+
+        visited.add(current_state)
+
+        if is_goal_state(current_state):
+            return True
+
+        next_states = get_next_states(current_state)
+        stack.extend(next_states)
+
+    return False
+
+if __name__ == "__main__":
+    initial_state = get_user_input()
+    
+    if solve_missionaries_cannibals(initial_state):
+        print("Solution exists.")
+    else:
+        print("No solution found.")
