@@ -1,0 +1,22 @@
+has_symptom(john, fever).
+has_symptom(john, cough).
+has_symptom(mary, headache).
+has_symptom(mary, fever).
+has_symptom(jane, cough).
+has_symptom(jane, fatigue).
+
+has_disease(flu, [fever, cough]).
+has_disease(migraine, [headache, fatigue]).
+
+diagnosis(Person, Disease) :-
+    has_symptom(Person, Symptom),
+    has_disease(Disease, Symptoms),
+    subset(Symptoms, Symptom).
+
+query_diagnosis(Person, Disease) :-
+    diagnosis(Person, Disease),
+    write('Diagnosis for '), write(Person), write(': '), write(Disease), nl.
+
+query_diagnosis(Person, _) :-
+    \+ diagnosis(Person, _),
+    write('No specific diagnosis for '), write(Person), nl.
